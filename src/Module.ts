@@ -3,11 +3,11 @@ export class Module<TContext = Record<any, any>> {
     private actions: Map<string, Module.Action<TContext>> = new Map();
 
     constructor(readonly name: string) {
-        this.init();
+
     }
 
     // tslint:disable-next-line:no-empty
-    protected init() {
+    init() {
 
     }
 

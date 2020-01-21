@@ -14,6 +14,7 @@ export class Engine<TContext extends Record<any, any>> {
                 throw new Error(`Module "${module.name}" is already registered`);
             }
 
+            module.init();
             this.modules.set(module.name, module);
         }
         return this;

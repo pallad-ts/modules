@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Module registering action fails to register action with same name 1`] = `"Action \\"foo\\" is already registered in module \\"foo\\""`;
+
+exports[`Module running action throws an error if action does not exist 1`] = `"Action \\"some-random\\" is not registered in module \\"foo\\""`;

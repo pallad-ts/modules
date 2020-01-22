@@ -10,7 +10,7 @@ export class Engine<TContext extends Record<any, any>> {
 
     registerModule(...modules: Array<Module<TContext>>): this {
         for (const module of modules) {
-            if (this.hasModule(module)) {
+            if (this.hasModule(module.name)) {
                 throw new Error(`Module "${module.name}" is already registered`);
             }
 
@@ -20,18 +20,15 @@ export class Engine<TContext extends Record<any, any>> {
         return this;
     }
 
-    hasModule(module: Module<TContext> | string) {
-        if (module instanceof Module) {
-            return this.modules.has(module.name);
-        }
-        return this.modules.has(module);
+    hasModule(moduleName: string) {
+        return this.modules.has(moduleName);
     }
 
-    runAction(name: string) {
+    runAction(actionName: string) {
         return Promise.all(
             Array.from(this.modules.values())
-                .filter(x => x.hasAction(name))
-                .map(x => x.runAction(name, this.context))
+                .filter(x => x.hasAction(actionName))
+                .map(x => x.runAction(actionName, this.context))
         )
             .then(x => {
                 return;

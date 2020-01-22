@@ -1,4 +1,4 @@
-export class Module<TContext = Record<any, any>> {
+export abstract class Module<TContext = Record<any, any>> {
 
     private actions: Map<string, Module.Action<TContext>> = new Map();
 
@@ -13,7 +13,7 @@ export class Module<TContext = Record<any, any>> {
 
     protected registerAction(name: string, action: Module.Action<TContext>): this {
         if (this.hasAction(name)) {
-            throw new Error(`Action "${name}" is already registered`);
+            throw new Error(`Action "${name}" is already registered in module "${this.name}"`);
         }
         this.actions.set(name, action);
         return this;
@@ -24,6 +24,9 @@ export class Module<TContext = Record<any, any>> {
     }
 
     public runAction(name: string, context: TContext) {
+        if (!this.hasAction(name)) {
+            throw new Error(`Action "${name}" is not registered in module "${this.name}"`);
+        }
         return this.actions.get(name)!(context);
     }
 }
